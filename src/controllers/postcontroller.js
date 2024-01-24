@@ -1,5 +1,5 @@
 
-const Post = require('./models/Post');
+const Post = require('../models/Post');
 
 const postController = {
     async createPost(req, res) {
@@ -40,6 +40,20 @@ const postController = {
         }
     },
 
+    async deletePost(req, res) {
+        try {
+            const { postId } = req.body;
+            const post = await Post.findOneAndDelete({ _id: postId, author: req.user._id });
+
+            if (!post) {
+                return res.status(404).send({ message: 'Post no encontrado o no autorizado para eliminar.' });
+            }
+
+            res.send({ message: 'Post eliminado con éxito' });
+        } catch (error) {
+            res.status(500).send({ message: 'Error al eliminar el post', error });
+        }
+    },
 };
 
 module.exports = postController;

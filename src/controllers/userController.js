@@ -1,5 +1,5 @@
 
-const User = require('./models/User');
+const User = require('../config/config');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -57,6 +57,41 @@ const userController = {
             res.send(user);
         } catch (error) {
             res.status(500).send({ message: 'Error al obtener información del usuario', error });
+        }
+    },
+    async updateComment(req, res) {
+        try {
+            const { commentId, text } = req.body;
+            const comment = await Comment.findOneAndUpdate(
+                { _id: commentId, author: req.user._id },
+                { text },
+                { new: true }
+            );
+
+            if (!comment) {
+                return res.status(404).send({ message: 'Comentario no encontrado o no autorizado.' });
+            }
+
+            res.send({ message: 'Comentario actualizado con éxito', comment });
+        } catch (error) {
+            res.status(500).send({ message: 'Error al actualizar el comentario', error });
+        }
+    },
+    async deleteComment(req, res) {
+        try {
+            const { commentId } = req.body;
+            const comment = await Comment.findOneAndDelete({ _id: commentId, author: req.user._id });
+
+            if (!comment) {
+                return res.status(404).send({ message: 'Comentario no encontrado o no autorizado para eliminar.' });
+            }
+
+            // Opcionalmente, remover el comentario del post
+            await Post.findByIdAndUpdate(comment.post, { $pull: { comments: commentId } });
+
+            res.send({ message: 'Comentario eliminado con éxito' });
+        } catch (error) {
+            res.status(500).send({ message: 'Error al eliminar el comentario', error });
         }
     },
 };
