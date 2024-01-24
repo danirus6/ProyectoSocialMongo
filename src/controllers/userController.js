@@ -1,5 +1,5 @@
 
-const User = require('../config/config');
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -23,7 +23,10 @@ const userController = {
 
             res.status(201).send({ message: 'Usuario registrado con éxito', user, token });
         } catch (error) {
-            res.status(500).send({ message: 'Error al registrar usuario', error });
+            if (error.name === 'ValidationError') {
+                return res.status(400).send({ message: 'Error de validación', errors: error.errors });
+            }
+            res.status(500).send({ message: 'Error al registrar usuario', error: error.message });
         }
     },
 
