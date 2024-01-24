@@ -1,4 +1,14 @@
 {
+  "name": "proyectosocialmongo",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.3"
   },
