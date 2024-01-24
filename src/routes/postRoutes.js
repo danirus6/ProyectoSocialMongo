@@ -1,16 +1,11 @@
-// postRoutes.js
-
 const express = require('express');
-const postController = require('../controller/postRoutes.js');
+const postController = require('../controllers/postController');
+const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
-// Crear un nuevo post
-router.post('/', postController.createPost);
-
+router.post('/', authMiddleware, postController.createPost);
 router.get('/', postController.getAllPosts);
-
-router.put('/', postController.updatePost);
-
-router.delete('/', postController.deletePost);
+router.put('/:postId', authMiddleware, postController.updatePost);
+router.delete('/:postId', authMiddleware, postController.deletePost);
 
 module.exports = router;
