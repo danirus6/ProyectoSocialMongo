@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 
-const connectDB = require('./config/dbConfig');
+const connectDB = require('./config/config');
 
 connectDB();
 
