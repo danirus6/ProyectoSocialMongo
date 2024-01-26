@@ -5,8 +5,6 @@ const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 
-
-
 const app = express();
 
 app.use(express.json());
