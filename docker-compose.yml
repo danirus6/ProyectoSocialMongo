@@ -1,0 +1,24 @@
+version: '3.6'
+
+services:
+  apimongodb:
+    container_name: proyectoSocialMongo
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/api-root/src
+    healthcheck:
+      disable: true
+    restart: unless-stopped
+    ports:
+      - 3001:3001
+    tty: true
+  dbmongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: socialMedia
