@@ -18,9 +18,6 @@ Este proyecto es una aplicación de red social básica construida con Node.js y 
 [![Express](https://img.shields.io/badge/Express-4.17.1-lightgrey)](https://expressjs.com/)
 [![Node.js](https://img.shields.io/badge/Node.js-14.17.6-brightgreen)](https://nodejs.org/)
 
-- Node.js
-- Express.js
-- MongoDB con Mongoose
 - JSON Web Token (JWT) para la autenticación
 - bcrypt para el hash de contraseñas
 
@@ -77,7 +74,7 @@ Puedes probar los endpoints utilizando Postman o cualquier otro cliente HTTP.
 - `POST /posts`: Crear un nuevo post (requiere autenticación).
 - `PUT /posts/:postId`: Actualizar un post (requiere autenticación).
 - `DELETE /posts/:postId`: Eliminar un post (requiere autenticación).
-- `GET /posts`: Obtener todos los posts.
+- `GET /posts`: Obtener todos los posts.Soporta paginación con parámetros `page` y `limit`. Por ejemplo: `/posts?page=2&limit=10`.
 - `GET /posts/search/:name`: Buscar posts por nombre.
 - `GET /posts/:postId`: Obtener un post por ID.
 - `POST /posts/like/:postId`: Dar 'like' a un post (requiere autenticación).

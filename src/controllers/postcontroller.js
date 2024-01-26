@@ -21,11 +21,22 @@ const postController = {
 
     async getAllPosts(req, res) {
         try {
-            const posts = await Post.find().populate('author', 'name email -_id');
-            res.send(posts);
-        } catch (error) {
+            const page = parseInt(req.query.page) || 1; 
+            const pageSize = 10; 
+            const skip = (page - 1) * pageSize; 
+      
+            const posts = await Post.find()
+                                    .skip(skip)
+                                    .limit(pageSize)
+                                    .populate('author', 'name email');
+      
+            const totalPosts = await Post.countDocuments(); // Total de posts para calcular el total de páginas
+            const totalPages = Math.ceil(totalPosts / pageSize);
+      
+            res.send({ posts, page, totalPages });
+          } catch (error) {
             res.status(500).send({ message: 'Error al obtener los posts', error });
-        }
+          }
     },
     async updatePost(req, res) {
         try {
